@@ -2,6 +2,24 @@
 
 # This script sets up the environment for the project.
 
+# Get the python command
+PYTHON_CMD=$(command -v python3 || command -v python)
+if [ -z "$PYTHON_CMD" ]; then
+    echo -e "\033[1;91mError: Python is not installed.\033[0m"
+    exit 1
+fi
+# Check if the script is run from the project root directory
+if [ ! -f "requirements.txt" ]; then
+    echo -e "\033[1;91mError: This script must be run from the project root directory.\033[0m"
+    exit 1
+fi
+# Check if the script is run in a virtual environment
+if [ -n "$VIRTUAL_ENV" ]; then
+    echo -e "\033[1;91mError: This script should not be run in a virtual environment.\033[0m"
+    exit 1
+fi
+
+
 # Function to explain how to activate and deactivate the environment
 explain_activation() {
     echo -e "\033[93mTo activate the environment, run:\033[0m"
@@ -33,9 +51,9 @@ usage() {
 # Function to build the environment
 build_env() {
     echo -e "\033[1;92mBuilding the environment...\033[0m"
-    python -m venv venv
+    python -m venv venv || python3 -m venv venv
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip install -r requirements.txt || pip3 install -r requirements.txt
     echo -e "\033[1;92mEnvironment built successfully.\033[0m"
 }
 
@@ -56,8 +74,8 @@ status_env() {
         source venv/bin/activate
         echo -e "\033[1;92mEnvironment status:\033[0m"
         echo -e "\033[1;92m  - Environment: \033[0m venv"
-        echo -e "\033[1;92m  - Python version: \033[0m $(python --version)"
-        echo -e "\033[1;92m  - Installed packages: \033[0m \n$(pip freeze)"
+        echo -e "\033[1;92m  - Python version: \033[0m $(python --version || python3 --version)"
+        echo -e "\033[1;92m  - Installed packages: \033[0m \n$(pip freeze || pip3 freeze)"
     else
         echo -e "\033[1;91mError: Environment not found. Please build it first.\033[0m"
     fi
