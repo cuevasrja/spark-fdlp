@@ -5,8 +5,6 @@ import sqlite3
 import numpy as np
 from sklearn.metrics import confusion_matrix
 from utils.processing import convert_to_vectors
-import seaborn as sns
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.naive_bayes import GaussianNB
 import os
@@ -14,21 +12,11 @@ import joblib
 from utils.model_methods import lr_model_path, gnb_model_path, linear_model_path, create_report, save_confusion_matrix
 
 query = f"""SELECT
+    DISTINCT(t.id),
     af.acousticness,
-    af.danceability,
     af.energy,
-    af.instrumentalness,
-    af.liveness,
     af.loudness,
-    af.speechiness,
-    af.tempo,
-    af.valence,
-    t.duration,
-    t.explicit,
-    af.key,
-    af.mode,
-    af.time_signature,
-    artists.followers,
+    af.instrumentalness,
     albums.popularity AS album_popularity,
     artists.popularity AS artist_popularity,
     t.popularity
@@ -40,7 +28,7 @@ LEFT JOIN r_track_artist AS rta ON t.id = rta.track_id
 LEFT JOIN artists ON rta.artist_id = artists.id
 LEFT JOIN r_artist_genre AS genres ON artists.id = genres.artist_id
 ORDER BY RANDOM()
-LIMIT {50000};"""
+LIMIT {100000};"""
 
 # Create a connection to the database
 conn = sqlite3.connect('spotify.sqlite')
@@ -56,6 +44,8 @@ def force_utf8(df):
 
 print("\033[93;1mLoading data from database...\033[0m")
 tracks: pd.DataFrame = pd.read_sql_query(query, conn)
+# Drop the first column
+tracks = tracks.drop(columns=["id"])
 print("Force UTF-8\n")
 tracks = force_utf8(tracks)
 

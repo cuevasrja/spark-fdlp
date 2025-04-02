@@ -97,6 +97,30 @@ def create_report(model_name: str, cm: np.ndarray, accuracy: float, mse: float):
 
     print(f"\033[92;1mReport saved to {report_path}\033[0m")
 
+def analyze_model(model_name: str, y_test: np.ndarray, predictions: np.ndarray):
+    """
+    Analyze the model by calculating the confusion matrix and accuracy.
+    """
+    from sklearn.metrics import confusion_matrix
+
+    # Calculate the confusion matrix
+    cm = confusion_matrix(y_test, predictions)
+
+    # Save the confusion matrix as a PNG file
+    save_confusion_matrix(cm, model_name)
+
+    # Calculate the accuracy
+    accuracy = np.mean(predictions == y_test)
+    print(f"Accuracy: \033[92;1m{accuracy}\033[0m")
+
+    # Calculate the mean squared error
+    mse = np.mean((predictions - y_test) ** 2)
+    print(f"Mean Squared Error: \033[92;1m{mse}\033[0m")
+
+    # Save the report
+    create_report(model_name, cm, accuracy, mse)
+    print(f"\033[92;1mReport saved to reports/{model_name}_report.txt\033[0m")
+
 def save_confusion_matrix(cm: pd.DataFrame, model_name: str):
     """
     Save the confusion matrix as a PNG file.

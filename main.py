@@ -1,6 +1,7 @@
 #!/bin/python
 
 import sys
+from cases.classify_popularity import ClassifyPopularity
 
 def main():
 
@@ -12,7 +13,8 @@ def main():
     _, n, file = sys.argv
     
     if n == '1':
-        pass
+        classifier = ClassifyPopularity(file)
+        classifier.predict()
     elif n == '2':
         pass
     elif n == '3':
