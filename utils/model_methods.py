@@ -17,10 +17,10 @@ def load_lr_model() -> LogisticRegression:
     If the model does not exist, create a new one.
     """
     if not os.path.exists(lr_model_path):
-        print("\033[94;1mLoading Logistic Regression...\033[0m")
+        print("\033[93;1mCreating Logistic Regression...\033[0m")
         lr = LogisticRegression()
     else:
-        print("\033[93;1mCreating Logistic Regression...\033[0m")
+        print("\033[94;1mLoading Logistic Regression...\033[0m")
         lr = joblib.load(lr_model_path)
     return lr
 
@@ -30,10 +30,10 @@ def load_gnb_model() -> GaussianNB:
     If the model does not exist, create a new one.
     """
     if not os.path.exists(gnb_model_path):
-        print("\033[94;1mLoading Gaussian Naive Bayes...\033[0m")
+        print("\033[93;1mCreating Gaussian Naive Bayes...\033[0m")
         gnb = GaussianNB()
     else:
-        print("\033[93;1mCreating Gaussian Naive Bayes...\033[0m")
+        print("\033[94;1mLoading Gaussian Naive Bayes...\033[0m")
         gnb = joblib.load(gnb_model_path)
     return gnb
 
@@ -43,10 +43,10 @@ def load_linear_model() -> LinearRegression:
     If the model does not exist, create a new one.
     """
     if not os.path.exists(linear_model_path):
-        print("\033[94;1mLoading Linear Regression...\033[0m")
+        print("\033[93;1mCreating Linear Regression...\033[0m")
         linear = LinearRegression()
     else:
-        print("\033[93;1mCreating Linear Regression...\033[0m")
+        print("\033[94;1mLoading Linear Regression...\033[0m")
         linear = joblib.load(linear_model_path)
     return linear
 

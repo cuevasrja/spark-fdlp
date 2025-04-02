@@ -27,18 +27,21 @@ class ClassifyPopularity:
         predict the model to the dataset.
         """
         # Convert the dataset to a Pandas DataFrame
-        df: pd.DataFrame = self.dataset.toPandas()
-        
-        x: np.ndarray
-        y: np.ndarray
-        # Separate features and target variable
-        x, y = convert_to_vectors(df)
-        
-        # Train the model
-        predictions = self.model.predict(x, y)
 
-        # Analyze the model
-        analyze_model(self.model, y, predictions)
+        self.dataset.sort("id").explain()
+
+        # df: pd.DataFrame = self.dataset.toPandas()
         
-        # Save the model
-        save_model(self.model, self.model_name)
+        # x: np.ndarray
+        # y: np.ndarray
+        # # Separate features and target variable
+        # x, y = convert_to_vectors(df)
+        
+        # # Train the model
+        # predictions = self.model.predict(x, y)
+
+        # # Analyze the model
+        # analyze_model(self.model, y, predictions)
+        
+        # # Save the model
+        # save_model(self.model, self.model_name)

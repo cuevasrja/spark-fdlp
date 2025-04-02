@@ -5,3 +5,60 @@
 - **Laura León** - 17-10307
 - **Juan Cuevas** - 19-10056
 - **Anya Marcano** - 19-10336
+
+## Instalación
+
+Para instalar las dependencias necesarias para el proyecto, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+./env.sh --build
+```
+
+Esto instalará las dependencias necesarias para el proyecto y creará un entorno virtual en la carpeta `venv`.
+Para activar el entorno virtual, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+source venv/bin/activate
+```
+
+> **Nota**
+>
+> En caso de que quiera desactivar el entorno virtual, se debe ejecutar el siguiente comando en la terminal:
+> ```bash
+> deactivate
+> ```
+>
+> Y si desea eliminar el entorno virtual, se debe ejecutar el siguiente comando en la terminal:
+> ```bash
+> ./env.sh --clean
+> ```
+
+## Uso
+
+Para ejecutar el servidor de conexión, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+start-connect-server.sh --packages org.apache.spark:spark-connect_2.12:$SPARK_VERSION
+```
+
+> **Nota**
+>
+> Para detener el servidor, se debe ejecutar el siguiente comando en la terminal:
+> ```bash
+> stop-connect-server.sh
+> ```
+
+Para ejecutar el cliente de conexión, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+./main.py <n> <file>
+```
+Donde `<n>` es el número de nodos y `<file>` es el archivo de texto que se desea procesar.
+
+### Ejemplo de uso
+
+Para ejecutar el cliente de conexión, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+./main.py 3 data.csv
+```
