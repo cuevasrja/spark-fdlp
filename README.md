@@ -62,3 +62,19 @@ Para ejecutar el cliente de conexión, se debe ejecutar el siguiente comando en 
 ```bash
 ./main.py 3 data.csv
 ```
+
+## Entrenamiento de los modelos
+
+Para entrenar los modelos, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+./train.py
+```
+
+Esto entrenará los modelos y guardará los resultados en la carpeta `models`.
+
+> **Importante**
+>
+> Para poder entrenar los modelos, se debe de tener la Base de datos `spotify.sqlite` en la carpeta la raíz del proyecto.
+>
+> Si desea descargar la base de datos, se puede hacer click en el siguiente [enlace](https://www.kaggle.com/datasets/maltegrosse/8-m-spotify-tracks-genre-audio-features).
