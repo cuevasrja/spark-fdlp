@@ -26,9 +26,6 @@ class ClassifyPopularity:
         """
         Classify the popularity of a song using Logistic Regression.
         """
-        # Convert the dataset to a Pandas DataFrame
-
-        df: pd.DataFrame = self.dataset.toPandas()
 
         # Only keep the columns:
         # acousticness,
@@ -38,18 +35,22 @@ class ClassifyPopularity:
         # album_popularity,
         # artist_popularity
         # and the target variable (popularity)
-        df = df[["acousticness", "energy", "loudness", "instrumentalness", "album_popularity", "artist_popularity", "popularity"]]
+        # df = df[["acousticness", "energy", "loudness", "instrumentalness", "album_popularity", "artist_popularity", "popularity"]]
+        df: DataFrame = self.dataset.select("acousticness", "energy", "loudness", "instrumentalness", "album_popularity", "artist_popularity", "popularity")
 
         # Remove rows with missing values
-        df = df.dropna()
+        df = df.na.drop()
+
+        # Convert the dataset to a Pandas DataFrame
+        df_p: pd.DataFrame = df.toPandas()
 
         # Convert the columns to the correct types
-        df = casting(df)
+        df_p = casting(df_p)
 
         x: np.ndarray
         y: np.ndarray
         # Separate features and target variable
-        x, y = convert_to_vectors(df)
+        x, y = convert_to_vectors(df_p)
         
         # Train the model
         predictions = self.model.predict(x)
@@ -73,19 +74,19 @@ class ClassifyPopularity:
             FROM songs
         """
 
-        # Execute the SQL query and convert the result to a Pandas DataFrame
-        df: pd.DataFrame = self.session.sql(query).toPandas()
+        # Execute the SQL query and remove rows with missing values
+        df: DataFrame = self.session.sql(query).na.drop()
 
-        # Remove rows with missing values
-        df = df.dropna()
+        # Convert the dataset to a Pandas DataFrame
+        df_p: pd.DataFrame = df.toPandas()
 
         # Convert the columns to the correct types
-        df = casting(df)
+        df_p = casting(df_p)
 
         x: np.ndarray
         y: np.ndarray
         # Separate features and target variable
-        x, y = convert_to_vectors(df)
+        x, y = convert_to_vectors(df_p)
 
         # Train the model
         predictions = self.model.predict(x)
