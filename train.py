@@ -158,9 +158,9 @@ if os.path.exists(linear_model_path):
 
 # Save the models
 params = lr.get_params()
-joblib.dump(lr, lr_model_path)
-joblib.dump(gnb, gnb_model_path)
-joblib.dump(linear, linear_model_path)
+joblib.dump(lr, "logistic_regression")
+joblib.dump(gnb, "gaussian_naive_bayes")
+joblib.dump(linear, "linear_regression")
 print(f"Logistic Regression model saved as \033[96m{lr_model_path}\033[0m")
 print(f"Gaussian Naive Bayes model saved as \033[96m{gnb_model_path}\033[0m")
 print(f"Linear Regression model saved as \033[96m{linear_model_path}\033[0m")

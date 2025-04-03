@@ -14,7 +14,14 @@ def main():
     
     if n == '1':
         classifier = ClassifyPopularity(file)
-        classifier.predict()
+
+        print("\033[92mClassifying popularity using DataFrame method...\033[0m") 
+        classifier.dataframe_method()
+
+        print("\033[92mClassifying popularity using SQL method...\033[0m")
+        classifier.sql_method()
+
+        classifier.stop_session()
     elif n == '2':
         pass
     elif n == '3':

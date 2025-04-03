@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import pandas as pd
-from utils.processing import convert_to_vectors
+from utils.processing import convert_to_vectors, casting
 
 class ClassifyPopularity:
     """
@@ -22,26 +22,83 @@ class ClassifyPopularity:
         self.session: SparkSession = create_spark_session("ClassifyPopularity")
         self.dataset: DataFrame = self.session.read.option("header", "true").option("inferSchema", "true").csv(filepath)
             
-    def predict(self):
+    def dataframe_method(self):
         """
-        predict the model to the dataset.
+        Classify the popularity of a song using Logistic Regression.
         """
         # Convert the dataset to a Pandas DataFrame
 
-        self.dataset.sort("id").explain()
+        df: pd.DataFrame = self.dataset.toPandas()
 
-        # df: pd.DataFrame = self.dataset.toPandas()
-        
-        # x: np.ndarray
-        # y: np.ndarray
-        # # Separate features and target variable
-        # x, y = convert_to_vectors(df)
-        
-        # # Train the model
-        # predictions = self.model.predict(x, y)
+        # Only keep the columns:
+        # acousticness,
+        # energy,
+        # loudness,
+        # instrumentalness,
+        # album_popularity,
+        # artist_popularity
+        # and the target variable (popularity)
+        df = df[["acousticness", "energy", "loudness", "instrumentalness", "album_popularity", "artist_popularity", "popularity"]]
 
-        # # Analyze the model
-        # analyze_model(self.model, y, predictions)
+        # Remove rows with missing values
+        df = df.dropna()
+
+        # Convert the columns to the correct types
+        df = casting(df)
+
+        x: np.ndarray
+        y: np.ndarray
+        # Separate features and target variable
+        x, y = convert_to_vectors(df)
         
-        # # Save the model
-        # save_model(self.model, self.model_name)
+        # Train the model
+        predictions = self.model.predict(x)
+
+        # Analyze the model
+        analyze_model(f"{self.model_name}-dataframe-spark", y, predictions)
+        
+        # Save the model
+        save_model(self.model, self.model_name)
+
+    def sql_method(self):
+        """
+        Classify the popularity of a song using Logistic Regression.
+        """
+        # Create a temporary view of the dataset
+        self.dataset.createOrReplaceTempView("songs")
+
+        # SQL query to select the relevant columns
+        query = """
+            SELECT acousticness, energy, loudness, instrumentalness, album_popularity, artist_popularity, popularity
+            FROM songs
+        """
+
+        # Execute the SQL query and convert the result to a Pandas DataFrame
+        df: pd.DataFrame = self.session.sql(query).toPandas()
+
+        # Remove rows with missing values
+        df = df.dropna()
+
+        # Convert the columns to the correct types
+        df = casting(df)
+
+        x: np.ndarray
+        y: np.ndarray
+        # Separate features and target variable
+        x, y = convert_to_vectors(df)
+
+        # Train the model
+        predictions = self.model.predict(x)
+
+        # Analyze the model
+        analyze_model(f"{self.model_name}-sql-spark", y, predictions)
+        
+        # Save the model
+        save_model(self.model, self.model_name)
+
+    def stop_session(self):
+        """
+        Stop the Spark session.
+        """
+        self.session.stop()
+        print(f"\033[92;1mSpark session stopped\033[0m")

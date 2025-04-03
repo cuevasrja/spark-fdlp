@@ -71,12 +71,14 @@ def save_model(model: LogisticRegression|GaussianNB|LinearRegression, model_path
     if not os.path.exists("models"):
         os.makedirs("models")
 
-    if os.path.exists(model_path):
-        os.remove(model_path)
+    path: str = f"models/{model_path}_model.pkl"
+
+    if os.path.exists(path):
+        os.remove(path)
         print(f"\033[93;1mModel already exists. Replacing it...\033[0m")
 
-    joblib.dump(model, model_path)
-    print(f"\033[92;1mModel saved to {model_path}\033[0m")
+    joblib.dump(model, path)
+    print(f"\033[92;1mModel saved to {path}\033[0m")
 
 def create_report(model_name: str, cm: np.ndarray, accuracy: float, mse: float):
     """
