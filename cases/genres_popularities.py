@@ -45,7 +45,7 @@ class GenresPopularities:
         ).orderBy("genre_id")
 
         # Muestra el resultado final
-        result.show(n=100, truncate=False)
+        result.show(n=200, truncate=False)
         print(f"Total rows: {result.count()}")
 
     def sql_method(self):
@@ -72,7 +72,7 @@ class GenresPopularities:
 
         # Ejecutar la consulta principal y mostrar el resultado
         result = self.session.sql(query)
-        result.show(n=100, truncate=False)
+        result.show(n=200, truncate=False)
         print(f"Total rows: {result.count()}")
 
     def stop_session(self):
