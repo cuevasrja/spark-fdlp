@@ -4,6 +4,7 @@ import sys
 import os
 from cases.classify_popularity import ClassifyPopularity
 from cases.relation_popularity import RelationPopularity
+from cases.genres_popularities import GenresPopularities
 
 def main():
     if not os.path.exists("out"):
@@ -29,7 +30,15 @@ def main():
     elif n == '2':
         pass
     elif n == '3':
-        pass
+        analyzer = GenresPopularities(file)
+
+        print("\033[92mAnalyzing genre popularities using DataFrame method...\033[0m")
+        analyzer.dataframe_method()
+
+        print("\033[92mAnalyzing genre popularities using SQL method...\033[0m")
+        analyzer.sql_method()
+
+        analyzer.stop_session()
     elif n == '4':
         relationer: RelationPopularity = RelationPopularity(file)
 
