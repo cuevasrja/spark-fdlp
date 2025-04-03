@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 import fireducks.pandas as pd
 import sqlite3
 import seaborn as sns
+import sys
+
+n: int = 100000
+if len(sys.argv) >= 2:
+    try:
+        n = int(sys.argv[1])
+    except ValueError:
+        print(f"Invalid argument: {sys.argv[1]}. Using default value: {n}")
 
 query = f"""SELECT
     DISTINCT(t.id),
@@ -32,7 +40,7 @@ LEFT JOIN albums ON rat.album_id = albums.id
 LEFT JOIN r_track_artist AS rta ON t.id = rta.track_id
 LEFT JOIN artists ON rta.artist_id = artists.id
 LEFT JOIN r_artist_genre AS genres ON artists.id = genres.artist_id
-LIMIT {100000};"""
+LIMIT {n};"""
 
 # Create a connection to the database
 conn = sqlite3.connect('spotify.sqlite')

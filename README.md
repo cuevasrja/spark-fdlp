@@ -78,3 +78,17 @@ Esto entrenará los modelos y guardará los resultados en la carpeta `models`.
 > Para poder entrenar los modelos, se debe de tener la Base de datos `spotify.sqlite` en la carpeta la raíz del proyecto.
 >
 > Si desea descargar la base de datos, se puede hacer click en el siguiente [enlace](https://www.kaggle.com/datasets/maltegrosse/8-m-spotify-tracks-genre-audio-features).
+
+## Correlación
+
+Para calcular la correlación entre las variables, se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+./correlation.py <n>
+```
+
+Donde `<n>` es el número de filas que se desea procesar para calcular la correlación (es opcional). Por defecto, el número de filas es 100000.
+
+> **Advertencia**
+>
+> Es posible usar todo el Dataset, pero tomen en cuenta que son mas de 10.000.000 filas y puede tardar mucho tiempo en procesarse, o incluso puede que no se procese por exceder la memoria disponible.
