@@ -175,3 +175,9 @@ cython_debug/
 
 # SQLite database
 *.sqlite
+
+# Output files
+*.out
+out/*
+*.log
+output/

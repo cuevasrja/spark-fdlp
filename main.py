@@ -2,6 +2,7 @@
 
 import sys
 from cases.classify_popularity import ClassifyPopularity
+from cases.relation_popularity import RelationPopularity
 
 def main():
 
@@ -27,7 +28,15 @@ def main():
     elif n == '3':
         pass
     elif n == '4':
-        pass
+        relationer: RelationPopularity = RelationPopularity(file)
+
+        print("\033[92mClassifying popularity using DataFrame method...\033[0m")
+        relationer.dataframe_method()
+
+        print("\033[92mClassifying popularity using SQL method...\033[0m")
+        relationer.sql_method()
+
+        relationer.stop_session()
     else:
         print("\033[91;1mInvalid option. Please choose a number between 1 and 4.\033[0m")
         print("\033[93;1mUsage:\033[0;93m python main.py <option> <file>\033[0m")
