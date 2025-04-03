@@ -71,6 +71,8 @@ def main():
         print("\033[93;1mOptions:\033[0m")
         print("\033[93m  1: Classify song popularity\033[0m")
         print("\033[93m  2: Analyze artists popularities\033[0m")
+        print("\033[93m  3: Analyze genre popularities\033[0m")
+        print("\033[93m  4: Classify relation popularity\033[0m")
         sys.exit(1)
 
 if __name__ == "__main__":
