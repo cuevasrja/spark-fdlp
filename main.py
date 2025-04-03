@@ -1,10 +1,13 @@
 #!/bin/python
 
 import sys
+import os
 from cases.classify_popularity import ClassifyPopularity
 from cases.relation_popularity import RelationPopularity
 
 def main():
+    if not os.path.exists("out"):
+        os.makedirs("out")
 
     if len(sys.argv) != 3:
         print("\033[91;1mInvalid number of arguments. Please provide an option and a file.\033[0m")
