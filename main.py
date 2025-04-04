@@ -16,6 +16,9 @@ def main():
         print("\033[91;1mUsage: python main.py <option> <file>\033[0m")
         sys.exit(1)
 
+    n: str
+    file: str
+    # Get the option and file from the command line arguments
     _, n, file = sys.argv
     
     if n == '1':
@@ -29,7 +32,7 @@ def main():
 
         classifier.stop_session()
     elif n == '2':
-        artists_pop = ArtistsPopularities(file)
+        artists_pop: ArtistsPopularities = ArtistsPopularities(file)
         
         print("\033[92mAnalyzing artists popularities using DataFrame method...\033[0m")
         artists_pop.dataframe_method()
@@ -46,7 +49,7 @@ def main():
         
         artists_pop.stop_session()
     elif n == '3':
-        analyzer = GenresPopularities(file)
+        analyzer: GenresPopularities = GenresPopularities(file)
 
         print("\033[92mAnalyzing genre popularities using DataFrame method...\033[0m")
         analyzer.dataframe_method()

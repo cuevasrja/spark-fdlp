@@ -179,6 +179,7 @@ class RelationPopularity:
         # Save the result to a CSV file
         df.write.mode("overwrite").option("header", "true").csv("out/relation_popularity-sql")
         print(f"\033[92;1mCSV file saved\033[0m")
+
         # Plot the result
         df_pandas: pd.DataFrame = df.toPandas()
         df_pandas["rank"] = df_pandas["rank"].astype(str)
@@ -188,6 +189,7 @@ class RelationPopularity:
         df_pandas["max_value"] = df_pandas["max_value"].str.replace("acousticness", "Acousticness")
         df_pandas["max_value"] = df_pandas["max_value"].str.replace("danceability", "Danceability")
         df_pandas["max_value"] = df_pandas["max_value"].str.replace("energy", "Energy")
+        
         # Plot the result as x: rank, y: percentage, hue: max_value
         # 3 lines (one for each max_value)
         plt.figure(figsize=(10, 6))
