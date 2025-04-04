@@ -36,16 +36,9 @@ def main():
         
         print("\033[92mAnalyzing artists popularities using DataFrame method...\033[0m")
         artists_pop.dataframe_method()
-        # df_result = artists_pop.dataframe_method()
         
         print("\033[92mAnalyzing artists popularities using SQL method...\033[0m")
         artists_pop.sql_method()
-        # sql_result = artists_pop.sql_method()
-        
-        # Opcional: guardar resultados
-        # output_dir = "tests/artists_popularities"
-        # artists_pop.save_results(df_result, f"{output_dir}/dataframe_result")
-        # artists_pop.save_results(sql_result, f"{output_dir}/sql_result")
         
         artists_pop.stop_session()
     elif n == '3':
