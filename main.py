@@ -3,6 +3,7 @@
 import sys
 import os
 from cases.classify_popularity import ClassifyPopularity
+from cases.artist_popularities import ArtistsPopularities
 from cases.relation_popularity import RelationPopularity
 from cases.genres_popularities import GenresPopularities
 
@@ -15,6 +16,9 @@ def main():
         print("\033[91;1mUsage: python main.py <option> <file>\033[0m")
         sys.exit(1)
 
+    n: str
+    file: str
+    # Get the option and file from the command line arguments
     _, n, file = sys.argv
     
     if n == '1':
@@ -28,9 +32,17 @@ def main():
 
         classifier.stop_session()
     elif n == '2':
-        pass
+        artists_pop: ArtistsPopularities = ArtistsPopularities(file)
+        
+        print("\033[92mAnalyzing artists popularities using DataFrame method...\033[0m")
+        artists_pop.dataframe_method()
+        
+        print("\033[92mAnalyzing artists popularities using SQL method...\033[0m")
+        artists_pop.sql_method()
+        
+        artists_pop.stop_session()
     elif n == '3':
-        analyzer = GenresPopularities(file)
+        analyzer: GenresPopularities = GenresPopularities(file)
 
         print("\033[92mAnalyzing genre popularities using DataFrame method...\033[0m")
         analyzer.dataframe_method()
@@ -53,7 +65,10 @@ def main():
         print("\033[91;1mInvalid option. Please choose a number between 1 and 4.\033[0m")
         print("\033[93;1mUsage:\033[0;93m python main.py <option> <file>\033[0m")
         print("\033[93;1mOptions:\033[0m")
-        # TODO: Add options
+        print("\033[93m  1: Classify song popularity\033[0m")
+        print("\033[93m  2: Analyze artists popularities\033[0m")
+        print("\033[93m  3: Analyze genre popularities\033[0m")
+        print("\033[93m  4: Classify relation popularity\033[0m")
         sys.exit(1)
 
 if __name__ == "__main__":
