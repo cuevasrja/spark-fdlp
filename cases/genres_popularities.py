@@ -13,7 +13,6 @@ class GenresPopularities:
         :param filepath: Path to the input CSV file.
         """
         self.session = create_spark_session("GenresPopularities")
-        # self.session.conf.set("spark.sql.debug.maxToStringFields", "1000") 
         self.dataset: DataFrame = self.session.read.option("header", "true").option("inferSchema", "true").csv(filepath)
 
     def dataframe_method(self):
