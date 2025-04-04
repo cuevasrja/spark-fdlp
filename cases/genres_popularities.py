@@ -13,16 +13,13 @@ class GenresPopularities:
         :param filepath: Path to the input CSV file.
         """
         self.session = create_spark_session("GenresPopularities")
-        self.session.conf.set("spark.sql.debug.maxToStringFields", "1000") 
+        # self.session.conf.set("spark.sql.debug.maxToStringFields", "1000") 
         self.dataset: DataFrame = self.session.read.option("header", "true").option("inferSchema", "true").csv(filepath)
 
     def dataframe_method(self):
         """
         Calculate the difference between average song popularity and album popularity using DataFrame API.
         """
-        # Imprimir registros donde genre_id contiene "emo"
-        print("Registros con genre_id que contienen 'emo' (DataFrame):")
-        self.dataset.filter(col("genre_id").contains("emo")).show(truncate=False)
 
         # Filtrar las filas con valores válidos y excluir registros con genre_id nulo, vacío o igual a "0"
         df = self.dataset.filter(
@@ -58,15 +55,6 @@ class GenresPopularities:
         """
         # Crear una vista temporal
         self.dataset.createOrReplaceTempView("songs")
-
-        # Imprimir registros donde genre_id contiene "emo"
-        print("Registros con genre_id que contienen 'emo' (SQL):")
-        query = """
-            SELECT *
-            FROM songs
-            WHERE genre_id LIKE '%emo%'
-        """
-        self.session.sql(query).show(truncate=False)
 
         # Consulta principal que excluye registros con genre_id nulo o vacío
         query = """
