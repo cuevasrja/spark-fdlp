@@ -22,7 +22,7 @@ def main():
     _, n, file = sys.argv
     
     if n == '1':
-        classifier = ClassifyPopularity(file)
+        classifier: ClassifyPopularity = ClassifyPopularity(file)
 
         print("\033[92mClassifying popularity using DataFrame method...\033[0m") 
         classifier.dataframe_method()

@@ -53,6 +53,18 @@ Para ejecutar el cliente de conexión, se debe ejecutar el siguiente comando en 
 ```bash
 ./main.py <n> <file>
 ```
+
+o
+
+```bash
+python main.py <n> <file>
+```
+
+> **Nota**
+>
+> El arhivo `main.py` tiene un hashbang que permite ejecutarlo directamente como un script de Python. Por lo que no es necesario ejecutar el comando `python` antes del archivo.
+> Sin embargo, esto depende de la configuración de su sistema operativo y de la versión de Python que tenga instalada.
+
 Donde `<n>` es el número de nodos y `<file>` es el archivo de texto que se desea procesar.
 
 ### Ejemplo de uso
