@@ -27,15 +27,13 @@ class ArtistsPopularities:
         
         # Clean and prepare the data
         df = self.dataset.withColumn(
-            "artist_popularity", 
-            when(col("artist_popularity").isNull() | (col("artist_popularity") == ""), 0)
-            .otherwise(col("artist_popularity"))
-        ).withColumn(
             "popularity", col("popularity").cast("float")
         ).withColumn(
             "artist_popularity", col("artist_popularity").cast("float")
         ).filter(
-            col("artist_name").isNotNull() & (col("artist_name") != "")
+            col("artist_name").isNotNull() & (col("artist_name") != "") &
+            col("artist_popularity").isNotNull() &
+            (col ("artist_popularity") > 0)
         )
         
         # Group by artist and calculate the average song popularity
@@ -73,12 +71,15 @@ class ArtistsPopularities:
             SELECT 
                 artist_name,
                 AVG(CAST(popularity AS FLOAT)) AS avg_song_popularity,
-                AVG(CASE 
-                    WHEN artist_popularity IS NULL OR artist_popularity = '' THEN 0 
-                    ELSE CAST(artist_popularity AS FLOAT) 
-                END) AS artist_popularity
+                AVG(CAST(artist_popularity AS FLOAT)) AS artist_popularity
             FROM tracks
-            WHERE artist_name IS NOT NULL AND artist_name != ''
+            WHERE 
+                artist_name IS NOT NULL
+                AND artist_name != ''
+                AND artist_popularity IS NOT NULL
+                AND artist_popularity != ''
+                AND artist_popularity != '0'
+                AND CAST(artist_popularity AS FLOAT) != 0
             GROUP BY artist_name
         """
         
